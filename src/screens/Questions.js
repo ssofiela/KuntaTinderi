@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {addMessage, deleteMessage} from '../store/actions/actions'
 import {DrawerActions} from "react-navigation-drawer";
 
-class MessageList extends React.Component {
+class Questions extends React.Component {
 
     render(){
         return(
@@ -31,4 +31,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageList);
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
