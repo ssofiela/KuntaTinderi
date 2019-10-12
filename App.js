@@ -1,19 +1,25 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import {View, Text} from 'react-native'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+import MessageList from './src/components/MessageList'
+
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
+import reducer from './src/store/reducers/reducer'
+
+const store = createStore(reducer)
+
+class App extends React.Component {
+
+  render(){
+    return(
+      <Provider store = {store}>
+        <View>
+          <MessageList/>
+        </View>
+      </Provider>
+    )
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
