@@ -5,6 +5,7 @@ import {addMessage, deleteMessage, changePost} from '../store/actions/actions'
 import { ScrollView } from "react-navigation";
 import { AntDesign } from '@expo/vector-icons';
 import questions from '../data/questios.json'
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
 
 class ShortPost extends React.Component {
@@ -33,7 +34,6 @@ class ShortPost extends React.Component {
 
     render(){
         const screenWidth = Dimensions.get('window').width;
-        console.log(screenWidth, "faasa")
         return(
             <View>
                 <ScrollView>
@@ -45,8 +45,13 @@ class ShortPost extends React.Component {
                         </View>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: -10, left: screenWidth/2-30}}>
-                        <TouchableOpacity onPress={() => this.props.shorten()}><AntDesign name="upcircle" size={64} color='#000'/></TouchableOpacity>
+                        <TouchableOpacity><AntDesign name="upcircle" size={64} color='#000'/></TouchableOpacity>
                     </View>
+                    <GestureRecognizer onSwipeUp={() =>this.props.shorten()}>
+                        <View style={{width: '100%', height: '100%', backgroundColor: 'transparent', marginTop: -200}}>
+                        </View>
+
+                    </GestureRecognizer>
                 </ScrollView>
             </View>
 

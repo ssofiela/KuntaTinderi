@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Button, Text, ImageBackground, TouchableOpacity} from 'react-native'
+import {View, Button, Text, ImageBackground, TouchableOpacity, AsyncStorage} from 'react-native'
 import {connect} from 'react-redux'
 import {addMessage, deleteMessage} from '../store/actions/actions'
 import questions from '../data/questios.json'
@@ -10,17 +10,35 @@ class ShortPost extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            index: 0
+            index: 0,
+            id: 0
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
+        console.log("short", this.props.id)
+        await this.getId();
         this.getData()
+    }
+
+    async getId() {
+        try {
+
+            const newId = await AsyncStorage.getItem('currentId', (id) => id);
+            if (newId !== null) {
+                const value = parseInt(newId);
+                this.setState({id: value});
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     getData() {
         const list = questions.questions;
         for(let i = 0; i < list.length; i++) {
-            if (list[i].id === this.props.id) {
+            const listId = parseInt(list[i].id);
+            if (listId === this.props.id) {
                 this.setState({index: i});
             }
         }
@@ -30,7 +48,7 @@ class ShortPost extends React.Component {
         return(
             <View>
                 <View style={{margin: 20}}>
-                    <Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>{questions.questions[this.state.index].question}</Text>
+                    <Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>{questions.questions[this.props.id].question}</Text>
                 </View>
             </View>
         )

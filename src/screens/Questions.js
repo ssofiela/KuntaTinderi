@@ -14,59 +14,74 @@ class Questions extends React.Component {
         this.state = {
             short: true,
             id: 1
-        }
-    }
+        };
 
-    componentDidMount() {
+    }
+    async componentDidMount () {
+        console.log("DID")
         this.setState({short: true});
-        this.getCurrentId()
+        await this.getCurrentId()
     }
-
+    
     async getCurrentId() {
         try {
-           await AsyncStorage.getItem('currentId', (id) => this.setState({id: id}))
+           const newId = await AsyncStorage.getItem('currentId', (id) => {
+               if (id !== null) {
+                   const value = parseInt(id)
+                   this.setState({id: value});
+               }
+           });
+
+
         } catch (e) {
             console.error(e)
         }
     }
 
-
-    // md-close-circle on ruksi
-    // md-checkmark-circle checkki merkki
-
     static navigationOptions = {
-        title: 'Kyssärit',
+        title: 'Kysymykset',
     };
+
 
     changeData() {
         this.setState({short: false});
     }
 
     async storeData(value) {
+        const id = this.state.id;
+        const strId = id.toString();
+        const srtValue = value.toString();
+        const stateValue = this.state.id +1;
+        const stateValueToStr = stateValue.toString()
         try {
-            await AsyncStorage.setItem('question' + this.state.id.toString(), value, {});
-            await AsyncStorage.setItem('currentId', this.state.id +1, {})
+            await AsyncStorage.setItem('question' + strId, srtValue , ()=>{});
+            await AsyncStorage.setItem('currentId', stateValueToStr, () => {
+                const value1 = this.state.id +1;
+                this.setState({id: value1});
+            })
         } catch (e) {
-            console.error(e)
+            console.error("This is storeData error", e)
         }
     }
 
     changeQuestion(value) {
         this.storeData(value);
-        this.setState({id: this.state.id + 1})
+
 
     }
 
 
     render(){
+        console.log("this.state questions", this.state.id)
         return(
             <View>
                 <ImageBackground source={backgroundTang} style={{width: '100%', height: '100%'}}>
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
 
                         {this.state.short
-                        ? (<TouchableOpacity style={{backgroundColor: '#F5E415'}} onPress={() =>this.changeData()}>
-                            <ShortPost id={this.state.id}/></TouchableOpacity>)
+                        ? ( <TouchableOpacity style={{backgroundColor: '#F5E415'}} onPress={() =>this.changeData()}>
+                                <ShortPost id={this.state.id}/>
+                            </TouchableOpacity>)
                         : <LongPost shorten={() => this.setState({short: true})}/>
                         }
                     </View>
