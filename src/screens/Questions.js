@@ -7,6 +7,7 @@ import ShortPost from '../components/ShortPost';
 import LongPost from '../components/LongPost';
 import { Ionicons } from '@expo/vector-icons';
 import questions from '../data/questios.json'
+import QuestionsEnd from './QuestionsEnd'
 
 class Questions extends React.Component {
     constructor(props){
@@ -18,11 +19,10 @@ class Questions extends React.Component {
 
     }
     async componentDidMount () {
-        console.log("DID")
         this.setState({short: true});
         await this.getCurrentId()
     }
-    
+
     async getCurrentId() {
         try {
            const newId = await AsyncStorage.getItem('currentId', (id) => {
@@ -67,25 +67,39 @@ class Questions extends React.Component {
     changeQuestion(value) {
         this.storeData(value);
 
-
+    }
+    wantedPage(continues) {
+        if (continues) {
+            if (this.state.short) {
+                return (
+                    <TouchableOpacity style={{backgroundColor: '#F5E415'}}
+                                      onPress={() => this.changeData()}>
+                        <ShortPost id={this.state.id}/>
+                    </TouchableOpacity>
+                )
+            } else {
+                return (<LongPost id={this.state.id} shorten={() => this.setState({short: true})}/>)
+            }
+        } else {
+            return (<QuestionsEnd/>)
+        }
     }
 
 
     render(){
-        console.log("this.state questions", this.state.id)
+        console.log("here")
+        let continues = true;
+        if (this.state.id === 8) {
+            console.log("over nine")
+            continues = false
+        }
         return(
             <View>
                 <ImageBackground source={backgroundTang} style={{width: '100%', height: '100%'}}>
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
-
-                        {this.state.short
-                        ? ( <TouchableOpacity style={{backgroundColor: '#F5E415'}} onPress={() =>this.changeData()}>
-                                <ShortPost id={this.state.id}/>
-                            </TouchableOpacity>)
-                        : <LongPost shorten={() => this.setState({short: true})}/>
-                        }
+                        {this.wantedPage(continues)}
                     </View>
-                    {this.state.short
+                    {this.state.short && continues !== false
                     ?(
                         <View>
                             <View style={{alignItems: 'flex-end'}}>
