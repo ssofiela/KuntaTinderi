@@ -1,7 +1,7 @@
 import { createAppContainer} from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import Questions from "./Questions";
-import MessageList from "./MessageList";
+import Questions from "../screens/Questions";
+import MessageList from "../screens/MessageList";
 
 
 const AppNavigator = createDrawerNavigator(
