@@ -70,6 +70,24 @@ class MyAnswers extends React.Component {
           answer: true,
           title: "mp koirat?",
           data: [20, 25, 48, 30, 52, 27]
+        },
+        {
+          id: 12351,
+          answer: true,
+          title: "mp nopeusrajotukset?",
+          data: [20, 25, 48, 30, 52, 27]
+        },
+        {
+          id: 23415,
+          answer: false,
+          title: "mp kissat?",
+          data: [50, 85, 76, 35, 70, 69]
+        },
+        {
+          id: 34155,
+          answer: true,
+          title: "mp koirat?",
+          data: [20, 25, 48, 30, 52, 27]
         }
       ]
     };
