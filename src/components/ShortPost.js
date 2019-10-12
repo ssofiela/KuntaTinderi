@@ -10,7 +10,7 @@ class ShortPost extends React.Component {
         return(
             <View>
                 <View style={{margin: 20}}>
-                    <TouchableOpacity style={{backgroundColor: '#F5E415'}}><Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>Haluaisitko laskea nopeuksia koulun lähellä?</Text></TouchableOpacity>
+                    <Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>Haluaisitko laskea nopeuksia koulun lähellä?</Text>
                 </View>
             </View>
         )
