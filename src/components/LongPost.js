@@ -1,61 +1,53 @@
 import React from 'react'
-import {View, Button, Text, ImageBackground, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, Button, Text, ImageBackground, TouchableOpacity, StyleSheet, Dimensions} from 'react-native'
 import {connect} from 'react-redux'
 import {addMessage, deleteMessage, changePost} from '../store/actions/actions'
 import { ScrollView } from "react-navigation";
 import { AntDesign } from '@expo/vector-icons';
+import questions from '../data/questios.json'
 
 
 class ShortPost extends React.Component {
     // 1C242B tumma väri
+    // false, true, skip, undefined
+    constructor(props){
+        super(props);
+        this.state = {
+            index: 0
+        }
+    }
+
+    componentDidMount() {
+        this.getData()
+    }
 
 
+    getData() {
+        const list = questions.questions;
+        for(let i = 0; i < list.length; i++) {
+            if (list[i].id === this.props.id) {
+                this.setState({index: i})
+            }
+        }
+    }
 
     render(){
+        const screenWidth = Dimensions.get('window').width;
+        console.log(screenWidth, "faasa")
         return(
             <View>
                 <ScrollView>
                     <View style={{margin: 20, flexDirection: 'column', backgroundColor: '#F5E415'}}>
-                        <Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>Haluaisitko laskea nopeuksia koulun lähellä?</Text>
+                        <Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>{questions.questions[this.state.index].question}</Text>
                         <View style={{flexDirection: 'column'}}>
-                            <Text style={{fontSize: 22, fontWeight: 'bold'}}>Tarkempi kuvaus:</Text>
-                            <Text>Pieniä ekaluokkalaisia on liikkeellä nyt enemmän kuin koskaan.</Text>
-                        </View>
-                        <View style={{flexDirection: 'column'}}>
-                            <Text style={{fontSize: 22, fontWeight: 'bold'}}>Ketä koskee:</Text>
-                            <Text>Nopeusrajoitus koskee enemmäkseen Myllymäen koulun aluetta,
-                                mutta nopeusrajoituksia mietitään myös muiden koulujen lähistölle. </Text>
-                        </View>
-                        <View style={{flexDirection: 'column'}}>
-                            <Text style={{fontSize: 22, fontWeight: 'bold'}}>Ketä koskee:</Text>
-                            <Text>Nopeusrajoitus koskee enemmäkseen Myllymäen koulun aluetta,
-                                mutta nopeusrajoituksia mietitään myös muiden koulujen lähistölle. </Text>
-                        </View>
-                        <View style={{flexDirection: 'column'}}>
-                            <Text style={{fontSize: 22, fontWeight: 'bold'}}>Ketä koskee:</Text>
-                            <Text>Nopeusrajoitus koskee enemmäkseen Myllymäen koulun aluetta,
-                                mutta nopeusrajoituksia mietitään myös muiden koulujen lähistölle. </Text>
-                        </View>
-                        <View style={{flexDirection: 'column'}}>
-                            <Text style={{fontSize: 22, fontWeight: 'bold'}}>Ketä koskee:</Text>
-                            <Text>Nopeusrajoitus koskee enemmäkseen Myllymäen koulun aluetta,
-                                mutta nopeusrajoituksia mietitään myös muiden koulujen lähistölle. </Text>
-                        </View>
-                        <View style={{flexDirection: 'column'}}>
-                            <Text style={{fontSize: 22, fontWeight: 'bold'}}>Ketä koskee:</Text>
-                            <Text>Nopeusrajoitus koskee enemmäkseen Myllymäen koulun aluetta,
-                                mutta nopeusrajoituksia mietitään myös muiden koulujen lähistölle. </Text>
-                        </View>
-                        <View style={{flexDirection: 'column'}}>
-                            <Text style={{fontSize: 22, fontWeight: 'bold'}}>Ketä koskee:</Text>
-                            <Text>Nopeusrajoitus koskee enemmäkseen Myllymäen koulun aluetta,
-                                mutta nopeusrajoituksia mietitään myös muiden koulujen lähistölle. </Text>
+                            <Text style={{fontSize: 26, fontWeight: 'bold', marginLeft: 10}}>Tarkempi kuvaus:</Text>
+                            <Text style={{marginRight: 20, marginLeft: 20, marginTop: 10, marginBottom: 40, fontSize: 22}}>{questions.questions[this.state.index].description}</Text>
                         </View>
                     </View>
+                    <View style={{justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: -10, left: screenWidth/2-30}}>
+                        <TouchableOpacity onPress={() => this.props.shorten()}><AntDesign name="upcircle" size={64} color='#000'/></TouchableOpacity>
+                    </View>
                 </ScrollView>
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <TouchableOpacity onPress={() => this.props.shorten()}><AntDesign name="upcircleo" size={64} color='#F5E415'/></TouchableOpacity>
-                </View>
             </View>
 
         )
