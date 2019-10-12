@@ -6,6 +6,7 @@ import Answer from "../components/Answer";
 import QuestionData from "../components/QuestionData";
 import colors from "../common/colors";
 import Accordion from "react-native-collapsible/Accordion";
+import questions from "../data/questions.json";
 
 class MyAnswers extends React.Component {
   static navigationOptions = {
@@ -16,80 +17,7 @@ class MyAnswers extends React.Component {
     super(props);
     this.state = {
       activeQuestions: [],
-      questions: [
-        {
-          id: 123,
-          answer: true,
-          title: "mp nopeusrajotukset?",
-          data: [20, 25, 48, 30, 52, 27]
-        },
-        {
-          id: 234,
-          answer: false,
-          title: "mp kissat?",
-          data: [50, 85, 76, 35, 70, 69]
-        },
-        {
-          id: 345,
-          answer: true,
-          title: "mp koirat?",
-          data: [20, 25, 48, 30, 52, 27]
-        },
-        {
-          id: 1234,
-          answer: true,
-          title: "mp nopeusrajotukset?",
-          data: [20, 25, 48, 30, 52, 27]
-        },
-        {
-          id: 2344,
-          answer: false,
-          title: "mp kissat?",
-          data: [50, 85, 76, 35, 70, 69]
-        },
-        {
-          id: 3454,
-          answer: true,
-          title: "mp koirat?",
-          data: [20, 25, 48, 30, 52, 27]
-        },
-        {
-          id: 1235,
-          answer: true,
-          title: "mp nopeusrajotukset?",
-          data: [20, 25, 48, 30, 52, 27]
-        },
-        {
-          id: 2345,
-          answer: false,
-          title: "mp kissat?",
-          data: [50, 85, 76, 35, 70, 69]
-        },
-        {
-          id: 3455,
-          answer: true,
-          title: "mp koirat?",
-          data: [20, 25, 48, 30, 52, 27]
-        },
-        {
-          id: 12351,
-          answer: true,
-          title: "mp nopeusrajotukset?",
-          data: [20, 25, 48, 30, 52, 27]
-        },
-        {
-          id: 23415,
-          answer: false,
-          title: "mp kissat?",
-          data: [50, 85, 76, 35, 70, 69]
-        },
-        {
-          id: 34155,
-          answer: true,
-          title: "mp koirat?",
-          data: [20, 25, 48, 30, 52, 27]
-        }
-      ]
+      questions
     };
   }
 
@@ -102,13 +30,7 @@ class MyAnswers extends React.Component {
   };
 
   _renderHeader = question => {
-    return (
-      <Answer
-        key={question.title}
-        answer={question.answer}
-        title={question.title}
-      />
-    );
+    return <Answer key={question.title} questionObject={question} />;
   };
 
   _renderContent = question => {
@@ -122,7 +44,7 @@ class MyAnswers extends React.Component {
   renderAnswerList() {
     return this.state.questions.map(question => (
       <Answer
-        key={question.title}
+        key={question.id}
         answer={question.answer}
         title={question.title}
       />

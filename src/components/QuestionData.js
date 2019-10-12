@@ -22,13 +22,13 @@ class QuestionData extends React.Component {
           height: 200,
           display: "flex",
           flexDirection: "row",
-          marginHorizontal: 20,
+          paddingHorizontal: 20,
           marginTop: 10
         }}
       >
         <YAxis
           data={this.props.data}
-          style={{}}
+          style={{ width: 20 }}
           contentInset={{ top: 10, bottom: 25 }}
           svg={{
             fill: colors.YELLOW,
