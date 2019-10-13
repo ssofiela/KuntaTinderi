@@ -26,20 +26,20 @@ const headerOptions = {
 
 const AppNavigator = createBottomTabNavigator(
     {
+        Questions: createStackNavigator({
+            Questions: Questions,
+        },headerOptions),
         MyAnswers: createStackNavigator({
                 AnswerList: MyAnswers,
             },
             headerOptions
         ),
-        Questions: createStackNavigator({
-            Questions: Questions,
-        },headerOptions),
         Prizes: createStackNavigator({
             PrizeList: Prizes,
         },headerOptions)
     },
     {
-        initialRouteName: 'MyAnswers',
+        initialRouteName: 'Questions',
         defaultNavigationOptions: ({ navigation }) => ({
           headerStyle: {
             backgroundColor: colors.DARK_GRAY,

@@ -7,6 +7,7 @@ import QuestionData from "../components/QuestionData";
 import colors from "../common/colors";
 import Accordion from "react-native-collapsible/Accordion";
 import questions from "../data/questions.json";
+import answers from "../data/answers";
 
 class MyAnswers extends React.Component {
   static navigationOptions = {
@@ -17,7 +18,7 @@ class MyAnswers extends React.Component {
     super(props);
     this.state = {
       activeQuestions: [],
-      questions
+      questions: questions.questions
     };
   }
 
@@ -34,7 +35,7 @@ class MyAnswers extends React.Component {
   };
 
   _renderContent = question => {
-    return <QuestionData data={question.data} />;
+    return <QuestionData data={answers[question.id.toString()]} />;
   };
 
   _updateQuestions = activeQuestions => {
