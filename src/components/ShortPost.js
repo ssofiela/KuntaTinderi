@@ -8,8 +8,8 @@ import questions from '../data/questios.json'
 class ShortPost extends React.Component {
     // 1C242B tumma väri
 
+
     render(){
-        console.log(this.props.question)
         return(
             <View>
                 <View style={{margin: 20}}>

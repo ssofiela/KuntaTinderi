@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Button, Text, ImageBackground, TouchableOpacity, AsyncStorage, Dimensions} from 'react-native'
+import {View, Text, ImageBackground, TouchableOpacity, AsyncStorage} from 'react-native'
 import {connect} from 'react-redux'
 import {addMessage, deleteMessage, changePost} from '../store/actions/actions'
 import backgroundTang from '../images/background.png'
@@ -8,7 +8,6 @@ import LongPost from '../components/LongPost';
 import { Ionicons } from '@expo/vector-icons';
 import QuestionsEnd from './QuestionsEnd'
 import questions from '../data/questios.json'
-import GestureRecognizer from "react-native-swipe-gestures";
 import Swiper from 'react-native-deck-swiper'
 
 class Questions extends React.Component {
@@ -27,7 +26,7 @@ class Questions extends React.Component {
 
     async getCurrentId() {
         try {
-           const newId = await AsyncStorage.getItem('currentId', (id) => {
+           await AsyncStorage.getItem('currentId', (id) => {
                if (id !== null) {
                    const value = parseInt(id)
 
@@ -45,13 +44,7 @@ class Questions extends React.Component {
         title: 'Kysymykset',
     };
 
-
-    changeData() {
-        this.setState({short: false});
-    }
-
     async storeData(value) {
-        console.log("storefat")
         const id = this.state.id;
         const strId = id.toString();
         const srtValue = value.toString();
@@ -78,7 +71,6 @@ class Questions extends React.Component {
                     <Swiper
                         cards={questions.questions.slice(this.state.id-1,questions.questions.length)}
                         renderCard={(question) => {
-                            console.log(questions.questions.slice(this.state.id-1,questions.questions.length))
                             return (
                                 <View style={{backgroundColor: '#F5E415', margin: 30}}>
                                     <ShortPost id={this.state.id} question={question}/>
