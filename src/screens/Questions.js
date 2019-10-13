@@ -1,13 +1,15 @@
 import React from 'react'
-import {View, Button, Text, ImageBackground, TouchableOpacity, AsyncStorage} from 'react-native'
+import {View, Button, Text, ImageBackground, TouchableOpacity, AsyncStorage, Dimensions} from 'react-native'
 import {connect} from 'react-redux'
 import {addMessage, deleteMessage, changePost} from '../store/actions/actions'
 import backgroundTang from '../images/background.png'
 import ShortPost from '../components/ShortPost';
 import LongPost from '../components/LongPost';
 import { Ionicons } from '@expo/vector-icons';
-import questions from '../data/questios.json'
 import QuestionsEnd from './QuestionsEnd'
+import questions from '../data/questios.json'
+import GestureRecognizer from "react-native-swipe-gestures";
+import Swiper from 'react-native-deck-swiper'
 
 class Questions extends React.Component {
     constructor(props){
@@ -28,6 +30,7 @@ class Questions extends React.Component {
            const newId = await AsyncStorage.getItem('currentId', (id) => {
                if (id !== null) {
                    const value = parseInt(id)
+
                    this.setState({id: value});
                }
            });
@@ -48,6 +51,7 @@ class Questions extends React.Component {
     }
 
     async storeData(value) {
+        console.log("storefat")
         const id = this.state.id;
         const strId = id.toString();
         const srtValue = value.toString();
@@ -66,52 +70,71 @@ class Questions extends React.Component {
 
     changeQuestion(value) {
         this.storeData(value);
-
     }
     wantedPage(continues) {
         if (continues) {
             if (this.state.short) {
                 return (
-                    <TouchableOpacity style={{backgroundColor: '#F5E415'}}
-                                      onPress={() => this.changeData()}>
-                        <ShortPost id={this.state.id}/>
-                    </TouchableOpacity>
+                    <Swiper
+                        cards={questions.questions.slice(this.state.id-1,questions.questions.length)}
+                        renderCard={(question) => {
+                            console.log(questions.questions.slice(this.state.id-1,questions.questions.length))
+                            return (
+                                <View style={{backgroundColor: '#F5E415', margin: 30}}>
+                                    <ShortPost id={this.state.id} question={question}/>
+                                </View>
+                            )
+                        }}
+                        onSwipedLeft={() => this.sendHate()}
+                        onSwipedRight={() => this.sendLike()}
+                        onTapCard={() => this.tap()}
+                        verticalSwipe={false}
+                    />
+
                 )
             } else {
                 return (<LongPost id={this.state.id} shorten={() => this.setState({short: true})}/>)
             }
         } else {
-            return (<QuestionsEnd/>)
+            return (<QuestionsEnd openMyAnswers={() => this.props.navigation.navigate('MyAnswers')}/>)
         }
     }
 
+    sendLike() {
+        this.changeQuestion(1)
+    }
+    sendHate(){
+        this.changeQuestion(0)
+    }
+    tap() {
+        this.setState({short: false})
+    }
 
     render(){
-        console.log("here")
         let continues = true;
         if (this.state.id === 8) {
-            console.log("over nine")
             continues = false
         }
+
         return(
-            <View>
-                <ImageBackground source={backgroundTang} style={{width: '100%', height: '100%'}}>
+            <View style={{flex: 1}}>
+                <ImageBackground source={backgroundTang} style={{flex: 3}}>
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                         {this.wantedPage(continues)}
                     </View>
-                    {this.state.short && continues !== false
+                </ImageBackground>
+
+                {this.state.short && continues !== false
                     ?(
-                        <View>
-                            <View style={{alignItems: 'flex-end'}}>
-                                <TouchableOpacity style={{ borderRadius: 30, borderWidth: 2, borderColor: '#F5E415'}} onPress={() =>this.changeQuestion(2)}><Text style={{color:'#F5E415', margin: 10}}>SKIP</Text></TouchableOpacity>
-                            </View>
-                            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                <TouchableOpacity style={{margin: 20}} onPress={() => this.changeQuestion(0)}><Ionicons name="md-close-circle" size={64} color='#F5E415'/></TouchableOpacity>
-                                <TouchableOpacity style={{margin: 20}} onPress={() => this.changeQuestion(1)}><Ionicons name="md-checkmark-circle" size={64} color='#F5E415'/></TouchableOpacity>
+                        <View style={{backgroundColor: '#1C242B', flex: 1}}>
+                            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                                <TouchableOpacity style={{margin: 20}} onPress={() => this.changeQuestion(0)}><Ionicons name="md-close-circle" size={100} color='#F5E415'/></TouchableOpacity>
+                                <TouchableOpacity style={{ borderRadius: 400, borderWidth: 2, borderColor: '#F5E415', marginBottom: 70}} onPress={() =>this.changeQuestion(2)}><Text style={{color:'#F5E415', margin: 20, fontSize: 24}}>SKIP</Text></TouchableOpacity>
+
+                                <TouchableOpacity style={{margin: 20}} onPress={() => this.changeQuestion(1)}><Ionicons name="md-checkmark-circle" size={100} color='#F5E415'/></TouchableOpacity>
                             </View>
                         </View>
                     ): null}
-                </ImageBackground>
             </View>
         )
     }

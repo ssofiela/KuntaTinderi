@@ -22,12 +22,13 @@ class ShortPost extends React.Component {
         const screenWidth = Dimensions.get('window').width;
         return(
             <View>
+
                 <ScrollView>
                     <View style={{margin: 20, flexDirection: 'column', backgroundColor: '#F5E415'}}>
-                        <Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>{questions.questions[this.props.id].question}</Text>
+                        <Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>{questions.questions[this.props.id-1].question}</Text>
                         <View style={{flexDirection: 'column'}}>
                             <Text style={{fontSize: 26, fontWeight: 'bold', marginLeft: 10}}>Tarkempi kuvaus:</Text>
-                            <Text style={{marginRight: 20, marginLeft: 20, marginTop: 10, marginBottom: 40, fontSize: 22}}>{questions.questions[this.props.id].description}</Text>
+                            <Text style={{marginRight: 20, marginLeft: 20, marginTop: 10, marginBottom: 40, fontSize: 22}}>{questions.questions[this.props.id-1].description}</Text>
                         </View>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: -10, left: screenWidth/2-30}}>

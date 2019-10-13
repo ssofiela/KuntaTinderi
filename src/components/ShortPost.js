@@ -9,10 +9,11 @@ class ShortPost extends React.Component {
     // 1C242B tumma väri
 
     render(){
+        console.log(this.props.question)
         return(
             <View>
                 <View style={{margin: 20}}>
-                    <Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>{questions.questions[this.props.id].question}</Text>
+                    <Text style={{fontSize: 38, textAlign: 'center', margin: 20}}>{questions.questions[this.props.id-1].question}</Text>
                 </View>
             </View>
         )

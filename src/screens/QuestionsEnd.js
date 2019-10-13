@@ -10,10 +10,10 @@ class ShortPost extends React.Component {
 
     render(){
         return(
-            <View style={{margin: 10, flexDirection: 'column', backgroundColor: '#F5E415'}}>
+            <View style={{margin: 40, flexDirection: 'column', backgroundColor: '#F5E415'}}>
                 <View style={{margin: 20}}>
                     <Text style={{fontSize: 38, textAlign: 'center', margin: 20, marginBottom: 40}}>Kysymykset loppuivat tältä erää.</Text>
-                    <TouchableOpacity style={{ color: "#1C242B", position: 'absolute', right: 0, bottom: 0}} onPress={() => this.navigation.navigate('MyAnswers')}><Text style={{fontWeight: 'bold'}}>OMAT VASTAUKSET</Text></TouchableOpacity>
+                    <TouchableOpacity style={{ color: "#1C242B", position: 'absolute', right: 0, bottom: 0}} onPress={() => this.props.openMyAnswers()}><Text style={{fontWeight: 'bold'}}>OMAT VASTAUKSET</Text></TouchableOpacity>
                 </View>
             </View>
         )
