@@ -1,11 +1,9 @@
 import React from "react";
 import {
   View,
-  Button,
   Text,
   ImageBackground,
   TouchableOpacity,
-  Dimensions,
   AsyncStorage,
   Platform
 } from "react-native";
@@ -21,7 +19,6 @@ import LongPost from "../components/LongPost";
 import { Ionicons } from "@expo/vector-icons";
 import QuestionsEnd from "./QuestionsEnd";
 import questions from "../data/questions.json";
-import GestureRecognizer from "react-native-swipe-gestures";
 import Swiper from "react-native-deck-swiper";
 
 class Questions extends React.Component {
@@ -39,7 +36,7 @@ class Questions extends React.Component {
 
   async getCurrentId() {
     try {
-      const newId = await AsyncStorage.getItem("currentId", id => {
+      await AsyncStorage.getItem("currentId", id => {
         if (id !== null) {
           const value = parseInt(id);
 
@@ -48,6 +45,69 @@ class Questions extends React.Component {
       });
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  static navigationOptions = {
+    title: "Kysymykset"
+  };
+
+  async storeData(value) {
+    const id = this.state.id;
+    const strId = id.toString();
+    const srtValue = value.toString();
+    const stateValue = this.state.id + 1;
+    const stateValueToStr = stateValue.toString();
+    try {
+      await AsyncStorage.setItem("question" + strId, srtValue, () => {});
+      await AsyncStorage.setItem("currentId", stateValueToStr, () => {
+        const value1 = this.state.id + 1;
+        this.setState({ id: value1 });
+      });
+    } catch (e) {
+      console.error("This is storeData error", e);
+    }
+  }
+
+  changeQuestion(value) {
+    this.storeData(value);
+  }
+  wantedPage(continues) {
+    if (continues) {
+      if (this.state.short) {
+        return (
+          <Swiper
+            cards={questions.questions.slice(
+              this.state.id - 1,
+              questions.questions.length
+            )}
+            renderCard={question => {
+              return (
+                <View style={{ backgroundColor: "#F5E415", margin: 30 }}>
+                  <ShortPost id={this.state.id} question={question} />
+                </View>
+              );
+            }}
+            onSwipedLeft={() => this.sendHate()}
+            onSwipedRight={() => this.sendLike()}
+            onTapCard={() => this.tap()}
+            verticalSwipe={false}
+          />
+        );
+      } else {
+        return (
+          <LongPost
+            id={this.state.id}
+            shorten={() => this.setState({ short: true })}
+          />
+        );
+      }
+    } else {
+      return (
+        <QuestionsEnd
+          openMyAnswers={() => this.props.navigation.navigate("MyAnswers")}
+        />
+      );
     }
   }
 

@@ -24,6 +24,7 @@ class Prizes extends React.Component {
       return (
         <ClickablePrize
           prize={prize}
+          key={prize.name}
           openDetails={() =>
             this.props.navigation.navigate("PrizeDetail", { prize })
           }
