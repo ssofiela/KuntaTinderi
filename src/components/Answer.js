@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Button, Text } from "react-native";
+import { View, Button, Text, AsyncStorage } from "react-native";
+import { NavigationEvents } from "react-navigation"
 import { connect } from "react-redux";
 import { addMessage, deleteMessage } from "../store/actions/actions";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,8 +9,36 @@ import colors from "../common/colors";
 class Answer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      answerValue: 3
+    };
   }
+
+  componentDidMount() {
+    this.setState({ answerValue: this.getAnswer() });
+  }
+
+  getAnswer = async () => {
+    try {
+      await AsyncStorage.getItem(
+        "answer" + this.props.questionObject.id,
+        answer => {
+          return answer;
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  getIcon = answerValue => {
+    switch (answerValue) {
+      case 0:
+        return "md-close-circle";
+      case 1:
+        return "md-checkmark-circle";
+    }
+  };
 
   render() {
     return (
@@ -18,22 +47,33 @@ class Answer extends React.Component {
           display: "flex",
           flexDirection: "row",
           backgroundColor: colors.DARK_GRAY,
-
           alignItems: "center",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
+          height: 80
         }}
       >
         <Text
-          style={{ color: colors.YELLOW, marginHorizontal: 10, fontSize: 20 }}
+          style={{
+            color: colors.YELLOW,
+            marginHorizontal: 10,
+            fontSize: 20,
+            width: "70%",
+            fontWeight: "bold"
+          }}
         >
-          {this.props.title}
+          {this.props.questionObject.question}
         </Text>
-        <Ionicons
-          name={this.props.answer ? "md-checkmark-circle" : "md-close-circle"}
-          size={48}
-          color={colors.YELLOW}
-          style={{ marginRight: 40, marginTop: 15, marginBottom: 15 }}
-        />
+        <View style={{ marginRight: 40 }}>
+          {this.state.answerValue < 2 ? (
+            <Ionicons
+              name={this.getIcon(this.getAnswer())}
+              size={48}
+              color={colors.YELLOW}
+            />
+          ) : (
+            <Text style={{ color: colors.YELLOW, fontSize: 16 }}>SKIP</Text>
+          )}
+        </View>
       </View>
     );
   }

@@ -1,0 +1,19 @@
+{
+  "prizes": [
+    {
+      "name": "K-Citymarket",
+      "value": "10€",
+      "image": "citymarket"
+    },
+    {
+      "name": "Kotipizza",
+      "value": "15€",
+      "image": "kotipizza"
+    },
+    {
+      "name": "Mäntsälän Kesport",
+      "value": "20€",
+      "image": "kesport"
+    }
+  ]
+}

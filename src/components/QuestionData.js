@@ -17,42 +17,49 @@ class QuestionData extends React.Component {
 
   render() {
     return (
-      <View
-        style={{
-          height: 200,
-          display: "flex",
-          flexDirection: "row",
-          paddingHorizontal: 20,
-          marginTop: 10
-        }}
-      >
-        <YAxis
-          data={this.props.data}
-          style={{width: 20}}
-          contentInset={{ top: 10, bottom: 25 }}
-          svg={{
-            fill: colors.YELLOW,
-            fontSize: 10
+      <View>
+        <Text
+          style={{ fontSize: 14, color: colors.YELLOW, marginHorizontal: 10 }}
+        >
+          {this.props.questionObject.description}
+        </Text>
+        <View
+          style={{
+            height: 200,
+            display: "flex",
+            flexDirection: "row",
+            paddingHorizontal: 20,
+            marginTop: 10
           }}
-          formatLabel={value => `${value}%`}
-          min={0}
-        />
-        <View style={{ flex: 1, flexDirection: "column" }}>
-          <BarChart
-            style={{ flex: 1 }}
+        >
+          <YAxis
             data={this.props.data}
-            svg={{ fill: colors.YELLOW }}
-            yMin={0}
-            contentInset={{ top: 10, bottom: 10 }}
-          >
-            <Grid svg={{ stroke: colors.YELLOW, strokeOpacity: 0.5 }} />
-          </BarChart>
-          <XAxis
-            data={this.props.data}
-            formatLabel={(value, index) => ageGroups[index]}
-            contentInset={{ left: 30, right: 30 }}
-            svg={{ fontSize: 10, fill: colors.YELLOW }}
+            style={{ width: 20 }}
+            contentInset={{ top: 10, bottom: 25 }}
+            svg={{
+              fill: colors.YELLOW,
+              fontSize: 10
+            }}
+            formatLabel={value => `${value}%`}
+            min={0}
           />
+          <View style={{ flex: 1, flexDirection: "column" }}>
+            <BarChart
+              style={{ flex: 1 }}
+              data={this.props.data}
+              svg={{ fill: colors.YELLOW }}
+              yMin={0}
+              contentInset={{ top: 10, bottom: 10 }}
+            >
+              <Grid svg={{ stroke: colors.YELLOW, strokeOpacity: 0.5 }} />
+            </BarChart>
+            <XAxis
+              data={this.props.data}
+              formatLabel={(value, index) => ageGroups[index]}
+              contentInset={{ left: 30, right: 30 }}
+              svg={{ fontSize: 10, fill: colors.YELLOW }}
+            />
+          </View>
         </View>
       </View>
     );

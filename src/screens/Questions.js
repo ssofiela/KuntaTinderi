@@ -41,8 +41,10 @@ class Questions extends React.Component {
     }
 
     static navigationOptions = {
-        title: 'Kysymykset',
+        title: 'Kysymykset ',
     };
+
+
 
     async storeData(value) {
         const id = this.state.id;
