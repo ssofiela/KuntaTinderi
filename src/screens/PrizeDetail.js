@@ -21,6 +21,13 @@ class Prizes extends React.Component {
     };
   }
 
+  usePrize = () => {
+    this.props.navigation.getParam("usePrize")(
+      this.props.navigation.getParam("prize").name
+    );
+    this.props.navigation.goBack();
+  };
+
   render() {
     return (
       <View
@@ -44,13 +51,19 @@ class Prizes extends React.Component {
         </Text>
 
         <Text
-          style={{ fontSize: 20, color: colors.YELLOW, fontWeight: "bold" }}
+          style={{
+            fontSize: 20,
+            color: colors.YELLOW,
+            fontWeight: "bold",
+            width: 250,
+            textAlign: "center"
+          }}
         >
           {this.props.navigation.getParam("prize").details}
         </Text>
 
         <Text
-          style={{ fontSize: 20, color: colors.YELLOW, fontWeight: "bold" }}
+          style={{ fontSize: 16, color: colors.YELLOW, fontWeight: "bold" }}
         >
           Etu on voimassa {this.props.navigation.getParam("prize").validUntil}{" "}
           asti
@@ -75,7 +88,7 @@ class Prizes extends React.Component {
             }}
             onPress={
               this.state.pressedOnce
-                ? () => this.props.navigation.goBack()
+                ? () => this.usePrize()
                 : () => this.setState({ pressedOnce: true })
             }
           >

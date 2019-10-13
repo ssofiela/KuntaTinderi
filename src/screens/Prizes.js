@@ -15,18 +15,32 @@ class Prizes extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      prizes: prizes.prizes
+    };
   }
 
+  usePrize = usedPrize => {
+    this.setState(prevState => {
+      return {
+        prizes: prevState.prizes.filter(prize => {
+          return prize.name != usedPrize;
+        })
+      };
+    });
+  };
+
   renderPrizes = () => {
-    return prizes.prizes.map(prize => {
-      console.log(prize);
+    return this.state.prizes.map(prize => {
       return (
         <ClickablePrize
           prize={prize}
           key={prize.name}
           openDetails={() =>
-            this.props.navigation.navigate("PrizeDetail", { prize })
+            this.props.navigation.navigate("PrizeDetail", {
+              prize,
+              usePrize: prizeName => this.usePrize(prizeName)
+            })
           }
         />
       );
