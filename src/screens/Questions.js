@@ -115,7 +115,7 @@ class Questions extends React.Component {
     } else {
       return (
         <QuestionsEnd
-          openMyAnswers={() => this.props.navigation.navigate("MyAnswers")}
+          openMyAnswers={() => this.props.navigation.navigate("Vastaukseni")}
         />
       );
     }

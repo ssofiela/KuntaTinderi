@@ -3,7 +3,7 @@ import { View, Button, Text, AsyncStorage } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { connect } from "react-redux";
 import { addMessage, deleteMessage } from "../store/actions/actions";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Feather } from "@expo/vector-icons";
 import colors from "../common/colors";
 import { answerValueToBoolean } from "../common/util";
 
@@ -16,15 +16,6 @@ class Answer extends React.Component {
   componentDidMount() {
     this.setState({});
   }
-
-  getIcon = answerValue => {
-    switch (answerValue) {
-      case 0:
-        return "md-close-circle";
-      case 1:
-        return "md-checkmark-circle";
-    }
-  };
 
   render() {
     return (
@@ -41,10 +32,7 @@ class Answer extends React.Component {
       >
         <Text
           style={{
-            color:
-              this.props.questionObject.answer < 2
-                ? colors.YELLOW
-                : colors.DISABLED,
+            color: colors.YELLOW,
             marginHorizontal: 10,
             fontSize: 20,
             width: "70%",
@@ -54,23 +42,11 @@ class Answer extends React.Component {
           {this.props.questionObject.question}
         </Text>
         <View style={{ marginRight: 40 }}>
-          {this.props.questionObject.answer < 2 ? (
-            <Ionicons
-              name={this.getIcon(this.props.questionObject.answer)}
-              size={32}
-              color={colors.YELLOW}
-            />
-          ) : (
-            <Text
-              style={{
-                color: colors.DISABLED,
-                fontSize: 16,
-                fontWeight: "bold"
-              }}
-            >
-              SKIP
-            </Text>
-          )}
+          <Feather
+            name={this.props.active ? "chevron-up" : "chevron-down"}
+            size={48}
+            color={colors.YELLOW}
+          />
         </View>
       </View>
     );

@@ -14,8 +14,7 @@ import QuestionData from "../components/QuestionData";
 import colors from "../common/colors";
 import Accordion from "react-native-collapsible/Accordion";
 import questions from "../data/questions.json";
-import answers from "../data/answers";
-import backgroundTang from "../images/background.png";
+import answers from "../data/answers.json";
 
 class MyAnswers extends React.Component {
   static navigationOptions = {
@@ -26,8 +25,7 @@ class MyAnswers extends React.Component {
     super(props);
     this.state = {
       activeQuestions: [],
-      questions: questions.questions,
-      allAnswers: []
+      questions: questions.questions
     };
   }
 
@@ -39,15 +37,27 @@ class MyAnswers extends React.Component {
     );
   };
 
-  _renderHeader = question => {
-    return <Answer key={question.title} questionObject={question} />;
+  _renderHeader = (question, index, isActive) => {
+    return (
+      <Answer
+        key={question.title}
+        questionObject={question}
+        active={isActive}
+      />
+    );
   };
 
   _renderContent = question => {
-    return <QuestionData data={answers[question.id.toString()]} />;
+    return (
+      <QuestionData
+        data={answers[question.id.toString()]}
+        questionObject={question}
+      />
+    );
   };
 
   _updateQuestions = activeQuestions => {
+    console.log(activeQuestions);
     this.setState({ activeQuestions });
   };
 

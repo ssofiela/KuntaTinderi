@@ -1,0 +1,25 @@
+{
+  "prizes": [
+    {
+      "name": "K-Citymarket",
+      "value": "10€",
+      "image": "citymarket",
+      "details": "Edun voi lunastaa K-Citymarket Mäntsälän info-pisteeltä.",
+      "validUntil": "3.5.2020"
+    },
+    {
+      "name": "Kotipizza",
+      "value": "15€",
+      "image": "kotipizza",
+      "details": "Edun voi lunastaa Kotipizza Mäntsälästä.",
+      "validUntil": "7.12.2020"
+    },
+    {
+      "name": "Mäntsälän Kesport",
+      "value": "20€",
+      "image": "kesport",
+      "details": "Edun voi lunastaa Kesport Mäntäslästä.",
+      "validUntil": "1.2.2020"
+    }
+  ]
+}
