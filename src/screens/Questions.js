@@ -5,8 +5,8 @@ import {
   Text,
   ImageBackground,
   TouchableOpacity,
-  AsyncStorage,
   Dimensions,
+  AsyncStorage,
   Platform
 } from "react-native";
 import { connect } from "react-redux";
@@ -59,22 +59,23 @@ class Questions extends React.Component {
     this.setState({ short: false });
   }
 
-  async storeData(value) {
+  storeData(value) {
     console.log("storefat");
     const id = this.state.id;
     const strId = id.toString();
     const srtValue = value.toString();
     const stateValue = this.state.id + 1;
     const stateValueToStr = stateValue.toString();
-    try {
-      await AsyncStorage.setItem("question" + strId, srtValue, () => {});
-      await AsyncStorage.setItem("currentId", stateValueToStr, () => {
-        const value1 = this.state.id + 1;
-        this.setState({ id: value1 });
-      });
-    } catch (e) {
-      console.error("This is storeData error", e);
-    }
+    AsyncStorage.setItem("question" + strId, srtValue, asd => {
+      console.log("added: ", asd);
+    });
+    AsyncStorage.setItem("currentId", stateValueToStr, () => {
+      const value1 = this.state.id + 1;
+      this.setState({ id: value1 });
+    });
+    AsyncStorage.getItem("question" + strId, id => {
+      console.log("id::", id);
+    });
   }
 
   changeQuestion(value) {
@@ -90,12 +91,6 @@ class Questions extends React.Component {
               questions.questions.length
             )}
             renderCard={question => {
-              console.log(
-                questions.questions.slice(
-                  this.state.id - 1,
-                  questions.questions.length
-                )
-              );
               return (
                 <View style={{ backgroundColor: "#F5E415", margin: 30 }}>
                   <ShortPost id={this.state.id} question={question} />
@@ -149,6 +144,7 @@ class Questions extends React.Component {
             style={{
               alignItems: "center",
               justifyContent: "center",
+              flex: 1,
               backgroundColor: "#000000"
             }}
           >

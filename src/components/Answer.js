@@ -10,27 +10,12 @@ import { answerValueToBoolean } from "../common/util";
 class Answer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      answerValue: 3
-    };
+    this.state = {};
   }
 
   componentDidMount() {
-    this.setState({ answerValue: this.getAnswer() });
+    this.setState({});
   }
-
-  getAnswer = async () => {
-    try {
-      await AsyncStorage.getItem(
-        "answer" + this.props.questionObject.id,
-        answer => {
-          return answer;
-        }
-      );
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   getIcon = answerValue => {
     switch (answerValue) {
@@ -50,12 +35,16 @@ class Answer extends React.Component {
           backgroundColor: colors.DARK_GRAY,
           alignItems: "center",
           justifyContent: "space-between",
-          height: 80
+          height: 80,
+          margin: 10
         }}
       >
         <Text
           style={{
-            color: colors.YELLOW,
+            color:
+              this.props.questionObject.answer < 2
+                ? colors.YELLOW
+                : colors.DISABLED,
             marginHorizontal: 10,
             fontSize: 20,
             width: "70%",
@@ -65,14 +54,22 @@ class Answer extends React.Component {
           {this.props.questionObject.question}
         </Text>
         <View style={{ marginRight: 40 }}>
-          {this.state.answerValue < 2 ? (
+          {this.props.questionObject.answer < 2 ? (
             <Ionicons
-              name={this.getIcon(this.getAnswer())}
-              size={48}
+              name={this.getIcon(this.props.questionObject.answer)}
+              size={32}
               color={colors.YELLOW}
             />
           ) : (
-            <Text style={{ color: colors.YELLOW, fontSize: 16 }}>SKIP</Text>
+            <Text
+              style={{
+                color: colors.DISABLED,
+                fontSize: 16,
+                fontWeight: "bold"
+              }}
+            >
+              SKIP
+            </Text>
           )}
         </View>
       </View>

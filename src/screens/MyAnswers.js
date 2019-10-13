@@ -1,5 +1,12 @@
 import React from "react";
-import { View, ScrollView, Button, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  Button,
+  Text,
+  AsyncStorage,
+  ImageBackground
+} from "react-native";
 import { connect } from "react-redux";
 import { addMessage, deleteMessage } from "../store/actions/actions";
 import Answer from "../components/Answer";
@@ -8,6 +15,7 @@ import colors from "../common/colors";
 import Accordion from "react-native-collapsible/Accordion";
 import questions from "../data/questions.json";
 import answers from "../data/answers";
+import backgroundTang from "../images/background.png";
 
 class MyAnswers extends React.Component {
   static navigationOptions = {
@@ -18,7 +26,8 @@ class MyAnswers extends React.Component {
     super(props);
     this.state = {
       activeQuestions: [],
-      questions: questions.questions
+      questions: questions.questions,
+      allAnswers: []
     };
   }
 
@@ -64,6 +73,7 @@ class MyAnswers extends React.Component {
           renderHeader={this._renderHeader}
           renderContent={this._renderContent}
           onChange={this._updateQuestions}
+          style={{ width: "90%" }}
         />
       </ScrollView>
     );
